@@ -1,0 +1,38 @@
+{
+  "name": "ihtsdo-daily-build-browser",
+  "version": "0.0.1",
+  "description": "Daily build browser.",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "mocha": "^1.18.2"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.4",
+    "grunt-contrib-uglify": "^0.4.0",
+    "grunt-bower-install": "~1.4.0",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-qunit": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-contrib-concat": "~0.4.0",
+    "grunt-usemin": "~2.1.1"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/termMed/ihtsdo-daily-build-browser.git"
+  },
+  "keywords": [
+    "SNOMED",
+    "REST",
+    "browser",
+    "terminology"
+  ],
+  "author": "termMed SA",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/termMed/ihtsdo-daily-build-browser/issues"
+  },
+  "homepage": "https://github.com/termMed/ihtsdo-daily-build-browser"
+}
