@@ -349,6 +349,9 @@
                 $("#responsive-perspective").css({"display":"none"});
                 $("#perspectiveLabel").html("<em>...</em>");
                 $('.more-fields-button').popover('hide');
+                jQuery.get('lastupdated.txt', function(data) {
+                    $("#lastUpdated").html(data);
+                });
             }
             function switchToBrowsing(cd1Value, cd2Value, txValue1) {
                 currentPerspective = "browsing";
@@ -630,6 +633,7 @@
                         <a class="btn btn-primary btn-lg" role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a>
                     </p>
                 </div>
+                <p id="lastUpdated"></p>
                 <p><span class="i18n" data-i18n-id="i18n_home6"><span class="btn-success"><em>Releases</em></span> will allow the selection of SNOMED CT content from the International Edition or other extensions, with specific dates.</span></p>
                 <p><span class="i18n" data-i18n-id="i18n_home7"><span class="btn-primary"><em>Perspectives</em></span>  are pre-defined browsing layouts for specific purposes. Use the <a href="javascript:void(0);" onclick="switchToResponsiveLayout(404684003,404684003);">responsive perspective</a> for best results in tablets and phones.</span></p>
             </div>
