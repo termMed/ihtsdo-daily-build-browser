@@ -1,0 +1,45 @@
+{
+    "issueId" : 1,
+    "translationChangeSets" : [
+        {
+            "changesetUuid" : "be73eb60-cb35-11e3-9c1a-0800200c9a66",
+            "creationTime" : "201404231800UTC",
+            "originVersion" :
+            {
+                "conceptId" : 324232,
+                "descriptionId" : 3423242,
+                "term" : "",
+                "type" : {},
+                "langCode" : "",
+                "ics" : {},
+                "langRefset" : {},
+                "acceptability" : {},
+                "descEfectiveTime" : 20120131,
+                "langEffectiveTime" : 20120131
+            },
+            "versions" : [
+                {
+                    "term" : "",
+                    "type" : {},
+                    "langCode" : "",
+                    "ics" : {},
+                    "langRefset" : {},
+                    "acceptability" : {},
+                    "author" : "username",
+                    "transactionTime" : "201404231800UTC"
+                },
+                {
+                    "term" : "",
+                    "type" : {},
+                    "langCode" : "",
+                    "ics" : {},
+                    "langRefset" : {},
+                    "acceptability" : {}
+                }
+            ]
+        },
+        {}
+    ],
+    "conceptCreationChangesets" : [],
+    "mappingChangsets" : []
+}

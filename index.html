@@ -17,6 +17,7 @@
         <script src="js/searchPlugin.js" type="text/javascript"></script>
         <script src="js/taxonomyPlugin.js" type="text/javascript"></script>
         <script src="js/conceptDetailsPlugin.js" type="text/javascript"></script>
+        <script src="js/diffReportsViewerPlugin.js" type="text/javascript"></script>
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/jquery.splitter.css">
         <link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.min.css">
@@ -37,9 +38,10 @@
             var currentPerspective = "home";
 
             var options = {
-                serverUrl: "http://107.170.53.78/api",
+                //serverUrl: "http://107.170.53.78/api",
+                serverUrl: "http://browser.ihtsdotools.org/api",
                 edition: "en-edition",
-                release: "v20140731",
+                release: "v20140131",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: false,
@@ -92,7 +94,7 @@
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
-                    release = "v20140731";
+                    release = "v20140131";
                 }
                 options.release = release;
 
@@ -429,9 +431,11 @@
                 var tpt = new taxonomyPanel(document.getElementById("fh-taxonomy_canvas"), txValue1, fhOptions);
                 var spa = new searchPanel(document.getElementById("fh-search_canvas"), fhOptions);
                 var cdPanel1 = new conceptDetails(document.getElementById("fh-cd1_canvas"), cd1Value, fhOptions);
+                var dff = new diffReportsPanel(document.getElementById("fh-diff_canvas"), fhOptions);
                 cdPanel1.setupCanvas();
                 tpt.subscribe(cdPanel1);
                 spa.subscribe(cdPanel1);
+                dff.subscribe(cdPanel1);
                 $('#spliter-fh').split({orientation: 'vertical', limit: 20, position: '40%'});
                 switchLanguage(selectedLanguage, selectedFlag, false);
             }
@@ -574,7 +578,7 @@
                                 <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20140131</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');reloadCurrentPerspective();">International Edition 20140731</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');reloadCurrentPerspective();">International Edition 20140131</a></li>
                             </ul>
                         </li>
                         <li class="navbar-text"></li>
@@ -625,10 +629,10 @@
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
                     <h1><span class="i18n" data-i18n-id="i18n_welcome">Welcome</span></h1>
-                    <p>This is a browser for the SNOMED CT Daily Build towards 20140731 relese.</p>
+                    <p>This is a browser for the SNOMED CT Daily Build towards 20140131 relese.</p>
                     <p>Please select a SNOMED CT release and a perspective from the top menu to start, or...</p>
                     <p>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">Daily build, 20140731</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140131', 'en-edition', 'v20140131', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">Daily build, 20140131</span></a>
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                         <a class="btn btn-primary btn-lg" role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a>
                     </p>
@@ -703,10 +707,12 @@
                         <ul class="nav nav-tabs" id="fh-tabs">
                             <li class="active"><a href="#fh-taxonomy_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_taxonomy">Taxonomy</span></a></li>
                             <li><a href="#fh-search_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_search">Search</span></a></li>
+                            <li><a href="#fh-diff_canvas" data-toggle="tab"><span class="i18n" data-i18n-id="i18n_differences">Differences</span></a></li>
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="fh-taxonomy_canvas" style="padding: 0px;margin: 0;"></div>
                             <div class="tab-pane" id="fh-search_canvas" style="padding: 0px;margin: 0;"></div>
+                            <div class="tab-pane" id="fh-diff_canvas" style="padding: 0px;margin: 0;"></div>
                         </div>
                     </div>
                     <div class="" id="conceptDetails-fh">

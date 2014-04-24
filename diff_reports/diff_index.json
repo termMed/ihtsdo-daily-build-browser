@@ -1,0 +1,22 @@
+{
+    "title" : "Diff run from 20140731 to 20140131",
+    "from" : 20140131,
+    "to" : 20140731,
+    "executionTime" : "Wed Apr 23 13:59:59 EDT 2014",
+    "reports" : [
+        {
+            "name" : "New Concepts",
+            "count" : 231,
+            "file" : "newConcepts.json"
+        },
+        {
+            "name" : "New Descriptions in existing concepts",
+            "count" : 127,
+            "file" : "newDescriptions.json"
+        },{
+            "name" : "New Relationships in existing concepts",
+            "count" : 65,
+            "file" : "newRelationships.json"
+        }
+    ]
+}
