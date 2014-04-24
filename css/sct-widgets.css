@@ -25,6 +25,7 @@ and open the template in the editor.
 i:active { background-color: #428bca; }
 
 .selectable-row:active { background-color: #428bca; color: white;}
+.selectable-row:hover {cursor: pointer; cursor: hand;}
 
 .popover {
     max-width: 800px;

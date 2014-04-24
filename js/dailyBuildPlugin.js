@@ -4,10 +4,13 @@
  * and open the template in the editor.
  */
 
-function diffReportsPanel(divElement, options) {
+function dailyBuildPanel(divElement, options) {
     var panel = this;
     this.subscribers = [];
     var xhr = null;
+    var title = "";
+    var executionTime = "";
+    var reportTitle = "";
     if (typeof componentsRegistry == "undefined") {
         componentsRegistry = [];
     }
@@ -33,7 +36,7 @@ function diffReportsPanel(divElement, options) {
         taxonomyHtml = taxonomyHtml + "<div class='panel-heading' id='" + panel.divElement.id + "-panelHeading'>";
         taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-subscribersMarker' class='btn btn-link btn-lg' style='padding: 2px; position: absolute;top: 1px;left: 0px;'><i class='glyphicon glyphicon-bookmark'></i></button>"
         taxonomyHtml = taxonomyHtml + "<div class='row'>";
-        taxonomyHtml = taxonomyHtml + "<div class='col-md-6' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_differences'>Differences</span></strong></div>";
+        taxonomyHtml = taxonomyHtml + "<div class='col-md-6' id='" + panel.divElement.id + "-panelTitle'>&nbsp&nbsp&nbsp<strong><span class='i18n' data-i18n-id='i18n_daily_build'>Daily Build</span></strong></div>";
         taxonomyHtml = taxonomyHtml + "<div class='col-md-6 text-right'>";
         taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-linkerButton' class='btn btn-link jqui-draggable linker-button' data-panel='" + panel.divElement.id + "' style='padding:2px'><i class='glyphicon glyphicon-link'></i></button>"
         taxonomyHtml = taxonomyHtml + "<button id='" + panel.divElement.id + "-configButton' class='btn btn-link' style='padding:2px' data-target='#" + panel.divElement.id + "-configModal'><i class='glyphicon glyphicon-cog'></i></button>"
@@ -156,24 +159,69 @@ function diffReportsPanel(divElement, options) {
             $("#" + panel.divElement.id + "-linkerButton").popover('toggle');
         });
 
-        panel.readReports();
+        panel.readReportsSummary();
 
     }
 
-    this.readReports = function() {
+    this.readReportsSummary = function() {
+        $('#' + panel.divElement.id + '-panelBody').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $.getJSON( "diff_reports/diff_index.json", function( data ) {
             var reportsHtml =  '';
-            reportsHtml =  reportsHtml + '<h4>' +  data.title + '</h4>';
-            reportsHtml =  reportsHtml + 'Execution Time: ' + data.executionTime + "<br>";
-            reportsHtml =  reportsHtml + 'Diff from: ' + data.from + " to " + data.to + "<br><br>";
-            reportsHtml =  reportsHtml + '<ul style="list-style-type: none; padding-left: 5px;"><li>Differences';
-            reportsHtml =  reportsHtml + '  <u style="list-style-type: none; padding-left: 5px;"l>';
+            panel.title = data.title;
+            panel.executionTime = data.executionTime;
+            reportsHtml = reportsHtml + '<div style="margin: 5px">';
+            reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
+            reportsHtml = reportsHtml + '  <br>';
+            reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
+            reportsHtml = reportsHtml + '</div>';
+            reportsHtml = reportsHtml + "<table id='" + panel.divElement.id + "-resultsTable' class='table table-bordered'>";
+            reportsHtml = reportsHtml + "<tr><th style='padding: 3px;'>Report</th><th style='padding: 3px;'>Count</th></tr>";
             $.each( data.reports, function( i, report ) {
-                reportsHtml =  reportsHtml + "<li>" + report.name + ": " + report.count + "</li>" ;
-                $('#' + panel.divElement.id + '-panelBody').html(reportsHtml);
+                reportsHtml =  reportsHtml + "<tr class='selectable-row' data-file='" + report.file + "' data-title='" + report.name + "'><td>" + report.name + "</td><td>" + report.count + "</td></tr>" ;
             });
-            reportsHtml =  reportsHtml + '  </ul>';
-            reportsHtml =  reportsHtml + '</li></ul>';
+            reportsHtml = reportsHtml + "</table>";
+            $('#' + panel.divElement.id + '-panelBody').html(reportsHtml);
+
+            $('#' + panel.divElement.id + '-panelBody').find('.selectable-row').click(function (event) {
+                panel.reportTitle = $(event.target).closest('tr').attr('data-title');
+                var link = $(event.target).closest('tr').attr('data-file');
+                panel.loadReport("diff_reports/" + link);
+            });
+
+        });
+    }
+
+    this.loadReport = function(link) {
+        $('#' + panel.divElement.id + '-panelBody').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
+        $.getJSON( link, function( data ) {
+            var reportsHtml =  '';
+            reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<a class="back-to-index" href="javascript:void(0);">Back to reports summary</a><br><br>';
+            reportsHtml = reportsHtml + '<div style="margin: 5px">';
+            reportsHtml = reportsHtml + '  <h4>' +  panel.title + '</h4>';
+            reportsHtml = reportsHtml + '  <br>';
+            reportsHtml = reportsHtml + '  <h4> ' + panel.reportTitle + "</h4>";
+            reportsHtml = reportsHtml + '  <br>';
+            reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<em class="text-muted pull-right">(last run ' + panel.executionTime + ")</em><br>";
+            reportsHtml = reportsHtml + '</div>';
+            reportsHtml = reportsHtml + "<table id='" + panel.divElement.id + "-resultsTable' class='table table-bordered'>";
+            reportsHtml = reportsHtml + "<tr><th style='padding: 3px;'>Concept</th><th style='padding: 3px;'>SCTID</th></tr>";
+            $.each( data, function( i, difference ) {
+                reportsHtml =  reportsHtml + "<tr class='selectable-row' data-concept-id='" + difference.cId + "'><td>" + difference.term + "</td><td>" + difference.cId + "</td></tr>" ;
+            });
+            reportsHtml = reportsHtml + "</table>";
+            $('#' + panel.divElement.id + '-panelBody').html(reportsHtml);
+
+            $('#' + panel.divElement.id + '-panelBody').find('.back-to-index').click(function (event) {
+                panel.readReportsSummary();
+            });
+
+            $('#' + panel.divElement.id + '-panelBody').find('.selectable-row').click(function (event) {
+                $.each(panel.subscribers, function (i, field) {
+                    field.conceptId = $(event.target).closest('tr').attr('data-concept-id');
+                    field.updateCanvas();
+                });
+            });
+
         });
     }
 
@@ -258,9 +306,9 @@ function clearTaxonomyPanelSubscriptions(divElementId1) {
 }
 
 (function($) {
-    $.fn.addDiffReportsPanel = function(options) {
+    $.fn.adddailyBuildPanel = function(options) {
         this.filter("div").each(function() {
-            var tx = new diffReportsPanel(this, options);
+            var tx = new dailyBuildPanel(this, options);
         });
     };
 }(jQuery));
