@@ -194,6 +194,13 @@ function dailyBuildPanel(divElement, options) {
     this.loadReport = function(link) {
         $('#' + panel.divElement.id + '-panelBody').html("<i class='glyphicon glyphicon-refresh icon-spin'></i>");
         $.getJSON( link, function( data ) {
+            data.sort(function(a, b) {
+                if (a.term.toLowerCase() < b.term.toLowerCase())
+                    return -1;
+                if (a.term.toLowerCase() > b.term.toLowerCase())
+                    return 1;
+                return 0;
+            })
             var reportsHtml =  '';
             reportsHtml = reportsHtml + '  &nbsp;&nbsp;&nbsp;<a class="back-to-index" href="javascript:void(0);">Back to reports summary</a><br><br>';
             reportsHtml = reportsHtml + '<div style="margin: 5px">';
