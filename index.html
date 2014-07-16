@@ -41,7 +41,7 @@
                 serverUrl: "http://107.170.53.78/api",
                 //serverUrl: "http://browser.ihtsdotools.org/api",
                 edition: "en-edition",
-                release: "v20140731",
+                release: "v20150131",
                 showIds: false,
                 hideNotAcceptable: true,
                 displayInactiveDescriptions: true,
@@ -57,7 +57,7 @@
                 searchLang: "english",
                 diagrammingMarkupEnabled: false,
                 statusSearchFilter: "activeOnly",
-                highlightByEffectiveTime: "20140731"
+                highlightByEffectiveTime: "20150131"
             };
 
             var tours = {};
@@ -95,7 +95,7 @@
 
                 var release = QueryString.release;
                 if (typeof release == "undefined" || release == null || release == "") {
-                    release = "v20140731";
+                    release = "v20150131";
                 }
                 options.release = release;
 
@@ -576,10 +576,10 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="navbar-btn" id="edition-selector">
                             <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20140131</span> <span class="caret"></span>
+                                <span class="i18n" data-i18n-id="i18n_release">Release</span>:&nbsp;<span id="editionLabel">International Edition 20150131</span> <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');reloadCurrentPerspective();">International Edition 20140131</a></li>
+                                <li><a href="javascript:void(0);" onclick="switchRelease('International Edition 20150131', 'en-edition', 'v20150131', '900000000000509007');reloadCurrentPerspective();">International Edition 20150131</a></li>
                             </ul>
                         </li>
                         <li class="navbar-text"></li>
@@ -630,13 +630,13 @@
             <div id="welcome-perspective"  class="bperspective">
                 <div class="jumbotron">
                     <h1><span class="i18n" data-i18n-id="i18n_welcome">Welcome</span></h1>
-                    <p>This is a browser for the SNOMED CT Daily Build towards the 20140731 release.</p>
+                    <p>This is a browser for the SNOMED CT Daily Build towards the 20150131 release.</p>
                     <h2><span class="text-warning">Warning</span></h2>
                     <p>This browser contains a test build of the terminology for evaluation purposes only. There can be no expectation of continuity of identifiers, descriptions text or changes in components (e.g. relationships).</p>
                     <p>No new concepts or identifiers may be used in clinical systems.</p>
                     <p>Please select a SNOMED CT release and a perspective from the top menu to start, or...</p>
                     <p>
-                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20140731', 'en-edition', 'v20140731', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">Daily build, 20140731</span></a>
+                        <a class="btn btn-primary btn-lg" role="button" onclick="switchRelease('International Edition 20150131', 'en-edition', 'v20150131', '900000000000509007');switchLanguage('en_US', 'img/flags/us.png', true);switchToFullHeight(404684003);"><img src="img/flags/us.png">&nbsp;&nbsp;&nbsp;Start browsing...</span><br><span class="small">Daily build, 20150131</span></a>
                         &nbsp;&nbsp;<span class="i18n" data-i18n-id="i18n_or">or</span>&nbsp;&nbsp;
                         <a class="btn btn-primary btn-lg" role="button" onclick="tourStart();"><span class="i18n" data-i18n-id="i18n_take_tour">take the Tour...</span></a>
                     </p>
